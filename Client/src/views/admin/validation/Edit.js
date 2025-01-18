@@ -1,4 +1,4 @@
-import { Button, Checkbox, Flex, FormLabel, Grid, GridItem, Heading, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, Text } from '@chakra-ui/react'
+import { Button, Checkbox, Flex, FormLabel, Grid, GridItem, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, Text } from '@chakra-ui/react'
 import Spinner from 'components/spinner/Spinner'
 import React, { useState } from 'react'
 import { useFormik } from 'formik'
@@ -10,7 +10,7 @@ import { validationAddSchema } from 'schema/validationAddSchema'
 
 const Edit = (props) => {
     const { onClose, isOpen, fetchData, selectedId, editdata, setAction, fetchViewData } = props;
-    const [isLoding, setIsLoding] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
 
     const initialValues = {
         name: editdata.name ? editdata.name : "",
@@ -78,8 +78,7 @@ const Edit = (props) => {
             return errors;
         },
         onSubmit: (values, { resetForm }) => {
-            EditData()
-            resetForm()
+            EditData(resetForm)
         },
     });
 
@@ -94,11 +93,13 @@ const Edit = (props) => {
                     fetchViewData()
                 }
                 setAction((pre) => !pre)
+                resetForm();
             }
         }
         catch {
         }
         finally {
+            setIsLoading(false);
         }
     }
 
@@ -391,7 +392,7 @@ const Edit = (props) => {
                         </>
                     </ModalBody>
                     <ModalFooter>
-                        <Button colorScheme="brand" size='sm' mr={2} disabled={isLoding ? true : false} onClick={handleSubmit}>{isLoding ? <Spinner /> : 'Update'}</Button>
+                        <Button colorScheme="brand" size='sm' mr={2} disabled={isLoading ? true : false} onClick={handleSubmit}>{isLoading ? <Spinner /> : 'Update'}</Button>
                         <Button sx={{
                             textTransform: "capitalize",
                         }} variant="outline"

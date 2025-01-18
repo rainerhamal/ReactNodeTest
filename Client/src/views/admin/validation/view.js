@@ -2,7 +2,7 @@ import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import { Box, Button, Flex, Grid, GridItem, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text } from '@chakra-ui/react'
 import { HSeparator } from 'components/separator/Separator';
 import Spinner from 'components/spinner/Spinner'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { getApi } from 'services/api';
 import Edit from './Edit';
 
@@ -18,7 +18,7 @@ const View = (props) => {
         setEditModal(false)
     }
 
-    const fetchViewData = async () => {
+    const fetchViewData = useCallback(async () => {
         setIsLoding(true)
         try {
             if (selectedId) {
@@ -30,10 +30,10 @@ const View = (props) => {
         } finally {
             setIsLoding(false)
         }
-    }
+    }, [selectedId])
     useEffect(() => {
         fetchViewData()
-    }, [selectedId, editModal])
+    }, [selectedId, editModal, fetchViewData])
 
     return (
         <div>

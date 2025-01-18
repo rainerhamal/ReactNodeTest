@@ -33,7 +33,7 @@ const AddEditUser = (props) => {
             AddData();
         },
     });
-    const { errors, touched, values, handleBlur, handleChange, handleSubmit, setFieldValue, resetForm } = formik
+    const { errors, touched, values, handleBlur, handleChange, handleSubmit, resetForm } = formik
 
     const AddData = async () => {
         if (userAction === "add") {

@@ -27,7 +27,7 @@ const Index = () => {
     const [validationData, setValidateData] = useState([])
     const [selectedValues, setSelectedValues] = useState([]);
     const [method, setMethod] = useState('')
-    const [isLoding, setIsLoding] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
 
     const fetchData = async () => {
         let response = await getApi(`api/validation`);
@@ -80,7 +80,7 @@ const Index = () => {
         if (method === 'one') {
             try {
                 if (id) {
-                    setIsLoding(true)
+                    setIsLoading(true)
                     const response = await deleteApi('api/validation/delete/', id)
                     if (response.status === 200) {
                         setDeleteMany(false)
@@ -91,11 +91,11 @@ const Index = () => {
                 console.log(error)
             }
             finally {
-                setIsLoding(false)
+                setIsLoading(false)
             }
         } else if (method === 'many') {
             try {
-                setIsLoding(true)
+                setIsLoading(true)
                 let response = await deleteManyApi('api/validation/deleteMany', fieldsIds)
                 if (response.status === 200) {
                     setSelectedValues([])
@@ -106,7 +106,7 @@ const Index = () => {
                 console.log(error)
             }
             finally {
-                setIsLoding(false)
+                setIsLoading(false)
             }
         }
 
@@ -115,7 +115,7 @@ const Index = () => {
     return (
         <div>
             <Flex justifyContent={"end"} mb={3}>
-                {selectedValues.length > 0 && <Button variant='outline' colorScheme='brand' color={"red"} mr={2} leftIcon={<DeleteIcon />} onClick={() => handleOpenDeleteMany('', "many")} size='sm' >Delete</Button>}
+                {selectedValues.length > 0 && <Button variant='outline' colorScheme='brand' color={"red"} mr={2} leftIcon={<DeleteIcon />} onClick={() => handleOpenDeleteMany('', "many")} size='sm' isLoading={isLoading}>Delete</Button>}
                 <Button size='sm' variant='brand' me={1} onClick={() => handleAddOpen()} leftIcon={<AddIcon />}>Add New</Button>
                 <Button size='sm' variant='brand' onClick={() => navigate(-1)} leftIcon={<IoIosArrowBack />}> Back</Button>
             </Flex>
@@ -169,7 +169,7 @@ const Index = () => {
                     </GridItem>
                 ))}
             </Grid>
-            {!validationData || validationData.length === 0 && 
+            {(!validationData || validationData.length === 0) && 
                 <Card mt='5'>
                     <Text textAlign={'center'} width="100%" color={'gray.500'} fontSize="sm" fontWeight="700">
                         <DataNotFound />

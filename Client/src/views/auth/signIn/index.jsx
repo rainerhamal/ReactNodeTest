@@ -38,7 +38,7 @@ function SignIn() {
   const textColor = useColorModeValue("navy.700", "white");
   const textColorSecondary = "gray.400";
   const brandStars = useColorModeValue("brand.500", "brand.400");
-  const [isLoding, setIsLoding] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
   const [checkBox, setCheckBox] = React.useState(true);
 
   const dispatch = useDispatch();
@@ -68,20 +68,21 @@ function SignIn() {
   } = useFormik({
     initialValues: initialValues,
     validationSchema: loginSchema,
-    onSubmit: (values, { resetForm }) => {
-      login();
+    onSubmit: async (values, { resetForm }) => {
+      await login();
+      resetForm();
     },
   });
   const navigate = useNavigate();
 
   const login = async () => {
     try {
-      setIsLoding(true);
+      setIsLoading(true);
       let response = await postApi("api/user/login", values, checkBox);
       if (response && response.status === 200) {
         navigate("/superAdmin");
         toast.success("Login Successfully!");
-        resetForm();
+        // resetForm();
         dispatch(setUser(response?.data?.user))
       } else {
         toast.error(response.response.data?.error);
@@ -89,7 +90,7 @@ function SignIn() {
     } catch (e) {
       console.log(e);
     } finally {
-      setIsLoding(false);
+      setIsLoading(false);
     }
   };
 
@@ -258,9 +259,9 @@ function SignIn() {
                 h="50"
                 type="submit"
                 mb="24px"
-                disabled={isLoding ? true : false}
+                disabled={isLoading ? true : false}
               >
-                {isLoding ? <Spinner /> : "Sign In"}
+                {isLoading ? <Spinner /> : "Sign In"}
               </Button>
             </FormControl>
           </form>

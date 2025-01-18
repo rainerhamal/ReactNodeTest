@@ -26,7 +26,7 @@ import { FaCreativeCommonsBy } from "react-icons/fa";
 
 
 export default function RoleTable(props) {
-  const { columnsData, tableData, title, fetchData, selectedValues, setSelectedValues, roleModal, setRoleModal } = props;
+  const { columnsData, tableData, title, setRoleModal } = props;
 
   const columns = useMemo(() => columnsData, [columnsData]);
   const data = useMemo(() => tableData, [tableData]);
@@ -53,7 +53,7 @@ export default function RoleTable(props) {
     prepareRow,
     page,
     pageOptions,
-    state: { pageIndex, pageSize }
+    // state: { pageIndex, pageSize }
   } = tableInstance;
 
   if (pageOptions.length < gopageValue) {

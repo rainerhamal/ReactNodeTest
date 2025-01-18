@@ -1,5 +1,5 @@
 import { AddIcon, ChevronDownIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
-import { Button, Flex, Grid, GridItem, Heading, Menu, MenuButton, MenuDivider, MenuItem, MenuList, Text, useDisclosure } from "@chakra-ui/react";
+import { Button, Flex, Grid, GridItem, Heading, Menu, MenuButton, MenuDivider, MenuItem, MenuList, Text } from "@chakra-ui/react";
 import Card from "components/card/Card";
 import { HSeparator } from "components/separator/Separator";
 import Spinner from "components/spinner/Spinner";
@@ -7,8 +7,8 @@ import { useEffect, useState } from "react";
 import { IoIosArrowBack } from "react-icons/io";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { getApi } from "services/api";
-import Add from "./Add";
-import Edit from "./Edit";
+// import Add from "./Add";
+// import Edit from "./Edit";
 import RoleTable from "./components/roleTable";
 import RoleModal from "./components/roleModal";
 import { useDispatch, useSelector } from "react-redux";
@@ -27,7 +27,7 @@ const View = () => {
     const dispatch = useDispatch()
     const userData = useSelector(state => state.user.user)
 
-    const userName = typeof userData === 'string' ? JSON.parse(userData) : userData
+    // const userName = typeof userData === 'string' ? JSON.parse(userData) : userData
 
     const param = useParams()
     const navigate = useNavigate()
@@ -48,7 +48,7 @@ const View = () => {
     const [userAction, setUserAction] = useState('')
     const [isOpen, setIsOpen] = useState(false)
 
-    const size = "lg";
+    // const size = "lg";
 
     const handleOpen = (type) => {
         setUserAction(type)
@@ -69,13 +69,16 @@ const View = () => {
         if (param.id) {
             fetchData()
         }
-    }, [action])
+    }, [action, param.id])
 
-    useEffect(async () => {
-        setIsLoding(true);
-        let result = await getApi("api/role-access");
-        setRoleData(result.data);
-        setIsLoding(false);
+    useEffect( () => {
+        async function fetchRoles() {
+            setIsLoding(true);
+            let result = await getApi("api/role-access");
+            setRoleData(result.data);
+            setIsLoding(false);
+        }
+        fetchRoles();
     }, [])
 
 
@@ -103,7 +106,7 @@ const View = () => {
                 <Flex justifyContent={'center'} alignItems={'center'} width="100%" >
                     <Spinner />
                 </Flex> : <>
-                    <AddEditUser isOpen={isOpen} onClose={handleClose} data={data} selectedId={param?.id} userAction={userAction} setUserAction={setUserAction} fetchData={fetchData} />
+                    <AddEditUser isOpen={isOpen} onClose={handleClose} data={data} selectedId={param?.id} userAction={userAction} setUserAction={setUserAction} fetchData={fetchData} isEdit={edit}/>
                     <CommonDeleteModel isOpen={deleteModel} onClose={() => setDelete(false)} type='User' handleDeleteData={handleDeleteClick} ids={''} selectedValues={param.id} />
                     <GridItem colSpan={{ base: 4 }}>
                         <Heading size="lg" m={3}>

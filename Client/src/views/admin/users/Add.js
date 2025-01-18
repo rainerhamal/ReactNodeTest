@@ -11,7 +11,7 @@ import { postApi } from 'services/api';
 
 const AddUser = (props) => {
     const { onClose, isOpen, setAction } = props
-    const [isLoding, setIsLoding] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
 
     const [show, setShow] = React.useState(false);
     const showPass = () => setShow(!show);
@@ -31,11 +31,11 @@ const AddUser = (props) => {
             AddData();
         },
     });
-    const { errors, touched, values, handleBlur, handleChange, handleSubmit, setFieldValue, resetForm } = formik
+    const { errors, touched, values, handleBlur, handleChange, handleSubmit, resetForm } = formik
 
     const AddData = async () => {
         try {
-            setIsLoding(true)
+            setIsLoading(true)
             let response = await postApi('api/user/register', values)
             if (response && response.status === 200) {
                 props.onClose();
@@ -48,7 +48,7 @@ const AddUser = (props) => {
             console.log(e);
         }
         finally {
-            setIsLoding(false)
+            setIsLoading(false)
         }
     };
 

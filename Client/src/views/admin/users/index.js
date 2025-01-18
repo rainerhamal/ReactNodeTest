@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { DeleteIcon, EditIcon, ViewIcon } from '@chakra-ui/icons';
-import { Button, Menu, MenuButton, MenuItem, MenuList, Text, useDisclosure } from '@chakra-ui/react';
+import { Button, Menu, MenuButton, MenuItem, MenuList, Text } from '@chakra-ui/react';
 import { getApi } from 'services/api';
 import CommonCheckTable from '../../../components/reactTable/checktable';
 import { SearchIcon } from "@chakra-ui/icons";
 import { CiMenuKebab } from 'react-icons/ci';
 import { IoIosArrowBack } from 'react-icons/io';
-import AddUser from './Add';
-import Edit from './Edit';
+// import AddUser from './Add';
+// import Edit from './Edit';
 import UserAdvanceSearch from './components/userAdvanceSearch';
 import { deleteManyApi } from 'services/api';
 import CommonDeleteModel from 'components/commonDeleteModel';
@@ -17,7 +17,7 @@ import AddEditUser from './AddEditUser';
 
 const Index = () => {
     const [action, setAction] = useState(false);
-    const [edit, setEdit] = useState(false);
+    // const [edit, setEdit] = useState(false);
     const [editData, setEditData] = useState({});
     // const { onOpen, onClose } = useDisclosure();
     const [isOpen, setIsOpen] = useState(false)
